@@ -1,65 +1,153 @@
 <html>
 <head>
 <link href="default.css" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.1/jquery.min.js"></script>
 </head>
 <body>
-<!--<video id="background-video" autoplay loop muted poster="https://assets.codepen.io/6093409/river.jpg">
-  <source src="https://vimeo.com/750485918" type="video/mp4">
-</video>-->
-<div id="background-video" ><iframe src="https://player.vimeo.com/video/750485918?h=fabaf075de&autoplay=1&loop=1&title=0&byline=0&portrait=0" style="width:100vw;height:100vh;" frameborder="0" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe></div><script src="https://player.vimeo.com/api/player.js"></script>
+<video id="background-video" autoplay loop muted poster="bgimage.png">
+  <source src="production.mp4" type="video/mp4">
+</video>
+
+
+ <div class="message-wrap" id="success" style="margin: auto; text-align: center; background-color: rgba(255,255,255,.1);"></div>
+<div id="outer">
+<form id="ajax-form" action="#">
 <div class="login-wrap">
+  <img id="logo" src="alawslogo.png" width="" height="">
     <div class="login-html">
-      <input id="tab-1" type="radio" name="tab" class="sign-in" checked><label for="tab-1" class="tab">Sign In</label>
-      <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Sign Up</label>
+      <input id="tab-1" type="radio" name="tab" class="sign-in"  checked><label for="tab-1" class="tab">Welcome</label>
+      <input id="tab-2" type="radio" name="tab" class="sign-up"><label for="tab-2" class="tab">Prayer Request</label>
       <div class="login-form">
         <div class="sign-in-htm">
           <div class="group">
-            <label for="user" class="label">Username</label>
-            <input id="user" type="text" class="input">
+            <label for="user" class="label">Name</label>
+            <input id="name" type="text" class="input">
+            <div id="error" style="color: red;"></div>
           </div>
           <div class="group">
-            <label for="pass" class="label">Password</label>
-            <input id="pass" type="password" class="input" data-type="password">
+            <label  class="label">Email</label>
+            <input id="email" type="text" class="input">
+            <div id="error1" style="color: red;"></div>
           </div>
           <div class="group">
-            <input id="check" type="checkbox" class="check" checked>
-            <label for="check"><span class="icon"></span> Keep me Signed in</label>
+            <label  class="label">Phone</label>
+            <input id="phone" type="text" class="input">
+            <input id="fname" type="hidden" name="fname" value="visitor">
           </div>
           <div class="group">
-            <input type="submit" class="button" value="Sign In">
+            <select class="fixed" name="checkone" id="checkone">
+              <option value=1 selected>Yes</option>
+              <option value=0>No</option>
+            </select>
+            <label for="check"><span class="icon"></span> I would love a call from the Pastors</label>
+          </div>
+          <div class="group">
+            <input id="submit" type="submit" class="button" value="Send Info">
           </div>
           <div class="hr"></div>
           <div class="foot-lnk">
-            <a href="#forgot">Forgot Password?</a>
+            <div class="hr"></div>
+            <a href="https://awakenla.org">AwakenLA</a>
           </div>
         </div>
+      </form>
+      <form id="ajax-formtwo" action="#">
         <div class="sign-up-htm">
           <div class="group">
-            <label for="user" class="label">Username</label>
-            <input id="user" type="text" class="input">
+            <label for="name" class="label">Name</label>
+            <input id="nametwo" type="text" class="input">
+            <div id="error3">This field is required</div>
           </div>
           <div class="group">
-            <label for="pass" class="label">Password</label>
-            <input id="pass" type="password" class="input" data-type="password">
+            <label  class="label">Phone Number</label>
+            <input id="phonetwo" type="text" class="input">
           </div>
           <div class="group">
-            <label for="pass" class="label">Repeat Password</label>
-            <input id="pass" type="password" class="input" data-type="password">
+            <label  class="label">Prayer Request</label>
+            <textarea id="prayer"  class="input" rows="3" cols="10"></textarea>
+            <input id="fname2" type="hidden" name="fname2" value="prayer">
           </div>
           <div class="group">
-            <label for="pass" class="label">Email Address</label>
-            <input id="pass" type="text" class="input">
+            <select name="checktwo" id="checktwo">
+              <option value=1 selected>Yes</option>
+              <option value=0>No</option>
+            </select>
+            <label for="check"><span class="icon"></span> I would love a call from the Pastors</label>
           </div>
           <div class="group">
             <input type="submit" class="button" value="Sign Up">
+          <div id="show_message"></div>
+        </form>
           </div>
           <div class="hr"></div>
           <div class="foot-lnk">
-            <label for="tab-1">Already Member?</a>
+            <a href="https://awakenla.org">Awaken LA</a>
           </div>
         </div>
       </div>
     </div>
   </div>
+</div>
+
+  <script type="text/javascript">
+  $("#success").hide();
+  $(document).ready(function () {
+        
+      $('#ajax-formtwo').submit(function(e){
+        var formData = {
+        nametwo: $("#nametwo").val(),
+        phonetwo: $("#phonetwo").val(),
+        prayer: $("textarea#prayer").val(),
+        fname: $("#fname2").val(),
+        checktwo: $("#checktwo").val(),
+        
+    };
+    e.preventDefault();
+       $.ajax('action.php',   // request url
+       {  
+         type: "POST",          
+         success: function (data, status, xhr) {    // success callback function
+             $('#success').show();
+             $('#success').append("Thank You!" + data);
+             $("#outer").hide();
+             alert(data);
+
+         },
+         data: formData,
+         dataType: "text",
+         encode: true,
+       });
+      });
+ 
+  });
+      $(document).ready(function () {
+        
+      $('#ajax-form').submit(function(e){
+        var formData = {
+        name: $("#name").val(),
+        email: $("#email").val(),
+        phone: $("#phone").val(),
+        fname: $("#fname").val(),
+        checkone: $("#checkone").is(':checked'),
+        
+    };
+    e.preventDefault();   
+    $.ajax('action.php',   // request url
+       {  
+         type: "POST",          
+         success: function (data, status, xhr) {    // success callback function
+             $('#success').show();
+             $('#success').append("Thank You!" + data);
+             $("#outer").hide();
+
+         },
+         data: formData,
+         dataType: "text",
+         encode: true,
+       });
+      });
+ 
+  });
+    </script>
 </body>
 </html>
