@@ -1,8 +1,8 @@
 <?php
-require('send.php');
+include('send.php');
 include('outcsv.php');
 $form = $_POST['fname'];
-
+//echo $form;
 if ($form == "visitor") {
     $name = $_POST['name'];
     $email = $_POST['email'];
@@ -48,7 +48,7 @@ $sql = "insert into " . $table . " (" . $cols . ") values(" . $vals . ");";
 <?php
 $servername = '127.0.0.1';
 $username = 'auser';
-$password = 'supereasypasslol';
+$password = 'Und3rGr@c3';
 $dbname = "awakenla";
 
 $dsn = "mysql:host=" . $servername . ";dbname=" . $dbname . ";charset=UTF8";
@@ -90,7 +90,7 @@ if ($form == "visitor") {
 }
 //Mailer Section
 
-$to = "pastoralex@nhfoursquare.org";
+$to = "closerwalk@gmail.com";
 $subject = "A New " . $form . " Form Has Been Submitted.";
 
 
