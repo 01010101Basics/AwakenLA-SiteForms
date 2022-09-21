@@ -45,10 +45,8 @@
                 <input id="fname" type="hidden" name="fname" value="visitor" style="color: black;font-weight: bold; ">
               </div>
               <div class="group">
-                <select class="fixed" name="checkone" id="checkone">
-                  <option value=1 selected>Yes</option>
-                  <option value=0>No</option>
-                </select>
+                <input type="checkbox" value="1" id="custom7" checked="checked" class="fixed" />
+                <input type="hidden" value="1" id="checkone" name="checkone" />
                 <label for="check"><span class="icon"></span> I would love a call from the Pastors</label>
               </div>
               <div class="group">
@@ -78,10 +76,8 @@
           <input id="fname2" type="hidden" name="fname2" value="prayer">
         </div>
         <div class="group">
-          <select name="checktwo" id="checktwo">
-            <option value=1 selected>Yes</option>
-            <option value=0>No</option>
-          </select>
+          <input type="checkbox" value="1" id="custom8" checked="checked" class="fixed" />
+          <input type="hidden" value="1" id="checkone" name="checktwo" />
           <label for="check"><span class="icon"></span> I would love a call from the Pastors</label>
         </div>
         <div class="group">
@@ -118,9 +114,9 @@
             type: "POST",
             success: function (data, status, xhr) {    // success callback function
               $('#success').show();
-              $('#success').append("Thank You!</br>");
+              $('#success').append("Thank You!</br>" + data);
               $("#outer").hide();
-
+              alert(data);
 
             },
             data: formData,
@@ -132,6 +128,13 @@
     });
     $(document).ready(function () {
 
+      $('#custom7').on('change', function () {
+        $('#checkone').val(this.checked ? 1 : 0);
+        alert('checked');
+      });
+      $('#custom8').on('change', function () {
+        $('#checkone').val(this.checked ? 1 : 0);
+      });
       $('#ajax-form').submit(function (e) {
         var formData = {
           name: $("#name").val(),
